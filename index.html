@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<title>copypasta converter</title>
+</head>
+<body class="container mt-4">
+	<div class="row">
+		<div class="col-sm">
+			<h2 class="text-center">Plain Text</h2>
+			<textarea rows="15" id="plain" class="form-control"></textarea>
+		</div>
+		<div class="col-sm">
+			<h2 class="text-center">copypasta</h2>
+			<textarea rows="15" id="pasta" class="form-control"></textarea>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script>
+/* jQuery.onDelay() https://github.com/knickers/ondelay */
+!function(n){n.fn.onDelay=function(i,t,l,o,e){return null==o&&null==e?(o=t,e=l,l=t=void 0):null==e&&("string"==typeof t?(e=o,o=l,l=void 0):(e=o,o=l,l=t,t=void 0)),n.fn.on.call(this,i,t,l,function(){e>0?(this.onDelayTimerId&&clearTimeout(this.onDelayTimerId),this.onDelayTimerId=setTimeout(function(n,i){o.apply(n,i)},e,this,arguments)):o.apply(this,arguments)})}}(jQuery);
+var alphabet = {
+"A": "Alfa",	"B": "Bravo",	"C": "Charlie",	"D": "Delta",	"E": "Echo",
+"F": "Foxtrot",	"G": "Golf",	"H": "Hotel",	"I": "India",	"J": "Juliett",
+"K": "Kilo",	"L": "Lima",	"M": "Mike",	"N": "November","O": "Oscar",
+"P": "Papa",	"Q": "Quebec",	"R": "Romeo",	"S": "Sierra",	"T": "Tango",
+"U": "Uniform",	"V": "Victor",	"W": "Whiskey",	"X": "X-ray",	"Y": "Yankee",
+"Z": "Zulu"
+};
+jQuery(function($) {
+	$('#plain').onDelay('input', function(e) {
+		var str = this.value.replace(/[^a-zA-Z ]/, '').toUpperCase();
+		var out = '';
+		for (var i=0; i<str.length; i++) {
+			if (str.charAt(i) == ' ') {
+				out += '.';
+			}
+			else {
+				if (i) {
+					out += ' ';
+				}
+				out += alphabet[str.charAt(i)];
+			}
+		}
+		$('#pasta').val(out);
+	}, 175);
+	$('#pasta').onDelay('input', function(e) {
+		var words = this.value.replace(/[^a-zA-Z. ]/, '').split('.');
+		var out = '';
+		for (var i=0; i<words.length; i++) {
+			var chars = words[i].split(' ');
+			for (var j=0; j<chars.length; j++) {
+				if (chars[j] != '') {
+					out += chars[j].charAt(0);
+				}
+			}
+			out += ' ';
+		}
+		$('#plain').val(out.toLowerCase());
+	}, 175);
+});
+	</script>
+</body>
+</html>
